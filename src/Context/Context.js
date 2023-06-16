@@ -29,8 +29,7 @@ export const PopupProvider = ({ children }) => {
   const [chk, setChk] = useState("none")
   const [plus, setPlus] = useState("block")
   const [cInfo, setCinfo] = useState("none")
-  const [pInfo, setPinfo] = useState("none")
-  const [sCross, setScross] = useState('hidden');
+  const [pInfo, setPinfo] = useState("none")  
   const [loginInpDisplay, setLoginInpDisplay] = useState('none');
 
   const TvUpFunc = () => {
@@ -165,19 +164,9 @@ export const PopupProvider = ({ children }) => {
     }, 500)
   }
 
-  const Search = (e) => {
-    if (e.target.value.length >= 0) {
-      setScross('visible')
-    }
-    if (e.target.value.length === 0) {
-      setScross('hidden')
-    }
-  }
+  
 
-  const Scross = () => {
-    setScross("hidden")
-    document.querySelector('input').value = "";
-  }
+
   const [sFunc, setSfunc] = useState(0)
   const SlideFunc = (e) => {
     if (e.target.classList.contains('slideImg')) {
@@ -397,7 +386,7 @@ export const PopupProvider = ({ children }) => {
 
   return (
     <PopUpContext.Provider
-      value={{ TvUpFunc, TvDownFunc, pP, pH, setPh, setPp, tvVis, tvTrf, MTrf, Mvis, sTrf, sVis, MUpFunc, MDownFunc, SUpFunc, SDownFunc, Premium, Super, Sbg, Pbg, colP, colS, Pdis, Sdis, Sbor, Pbor, lTrf, label, editLabel, inpBor, lDis, lBg, logFunc, setLdis, Leftfunc, Rightfunc, margin, laDis, rDis, Chkfunc, Plusfunc, chk, plus, pInfo, cInfo, Search, sCross, Scross, SlideFunc, sFunc, Main, bbg, Price, cs, csBg, ComingBG, eBg, edDis, eSliderR, eSliderL, slTrf, SepImg, eLdis, eRdis, ElDis, ErDis, eIp, EditInp, EdCross, ImgSrc, imgSrc, MainInpVal, imgMSrc, ImgMSrc, setImgMSrc, loginInpDisplay, setLoginInpDisplay, profile, setProfile, kidsInpVal, setImgSrc, sEdit, sideBar, setSideBar, googlefb, setGoogleFb, SideBarList, BottomBarList, setIsPath, isPath, setSfunc }}>
+      value={{ TvUpFunc, TvDownFunc, pP, pH, setPh, setPp, tvVis, tvTrf, MTrf, Mvis, sTrf, sVis, MUpFunc, MDownFunc, SUpFunc, SDownFunc, Premium, Super, Sbg, Pbg, colP, colS, Pdis, Sdis, Sbor, Pbor, lTrf, label, editLabel, inpBor, lDis, lBg, logFunc, setLdis, Leftfunc, Rightfunc, margin, laDis, rDis, Chkfunc, Plusfunc, chk, plus, pInfo, cInfo, SlideFunc, sFunc, Main, bbg, Price, cs, csBg, ComingBG, eBg, edDis, eSliderR, eSliderL, slTrf, SepImg, eLdis, eRdis, ElDis, ErDis, eIp, EditInp, EdCross, ImgSrc, imgSrc, MainInpVal, imgMSrc, ImgMSrc, setImgMSrc, loginInpDisplay, setLoginInpDisplay, profile, setProfile, kidsInpVal, setImgSrc, sEdit, sideBar, setSideBar, googlefb, setGoogleFb, SideBarList, BottomBarList, setIsPath, isPath, setSfunc }}>
       {children}
     </PopUpContext.Provider>
   )

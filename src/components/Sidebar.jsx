@@ -41,7 +41,7 @@ const Sidebar = () => {
     <>
       <Container>
         <img style={{ marginLeft: '13px', cursor: 'pointer' }} src="https://img1.hotstarext.com/image/upload/f_auto,q_90,w_256/v1656431456/web-images/logo-d-plus.svg" alt="" onClick={() => Navigate("/")} />
-        <Button onClick={() => Navigate("/subscribe")}>Subscribe <img src="assets/arrowleft.svg" alt="" /></Button>
+        <Button onClick={() => Navigate("/subscribe")}>Subscribe <img src="/assets/arrowleft.svg" alt="" /></Button>
         <Items className='imgitems'>
           <User onClick={(e) => {
             Navigate("/myspace")
@@ -70,7 +70,7 @@ const Sidebar = () => {
                         (currentUser && (user && user.photoURL))
                     } alt="" className={isActive === "myspace" ? 'none' : undefined}/>
                   :
-                  <img src="assets/user.svg" alt=""
+                  <img src="/assets/user.svg" alt=""
                   className={isActive === "myspace" ? 'none' : undefined}/>
               }
             </ImgSec>
@@ -82,8 +82,8 @@ const Sidebar = () => {
             setIsActive("search")
           }} className={isActive === "search" ? 'item filter' : undefined}>
             <ImgSec>
-              <img src="assets/sear.svg" alt="" className={isActive === "search" ? 'block' : undefined} />
-              <img src="assets/search.svg" alt="" className={isActive === "search" ? 'none' : undefined} />
+              <img src="/assets/sear.svg" alt="" className={isActive === "search" ? 'block' : undefined} />
+              <img src="/assets/search.svg" alt="" className={isActive === "search" ? 'none' : undefined} />
             </ImgSec>
             <span>Search</span>
           </Search>
@@ -93,8 +93,8 @@ const Sidebar = () => {
             setIsActive("home")
           }} className={isActive === "home" ? 'item filter' : undefined} >
             <ImgSec>
-              <img src="assets/fillhome.svg" alt="" className={isActive === "home" ? 'block' : undefined} />
-              <img src="assets/home.svg" alt="" className={isActive === "home" ? 'none' : undefined} />
+              <img src="/assets/fillhome.svg" alt="" className={isActive === "home" ? 'block' : undefined} />
+              <img src="/assets/home.svg" alt="" className={isActive === "home" ? 'none' : undefined} />
             </ImgSec>
             <span>Home</span>
           </Home>
@@ -104,19 +104,19 @@ const Sidebar = () => {
             setIsActive("tv")
           }} className={isActive === "tv" ? 'item filter' : undefined}>
             <ImgSec>
-              <img src="assets/filltv.svg" alt="" className={isActive === "tv" ? 'block' : undefined}/>
-              <img src="assets/tv.svg" alt="" className={isActive === "tv" ? 'none' : undefined}/>
+              <img src="/assets/filltv.svg" alt="" className={isActive === "tv" ? 'block' : undefined}/>
+              <img src="/assets/tv.svg" alt="" className={isActive === "tv" ? 'none' : undefined}/>
             </ImgSec>
             <span>TV</span>
           </Tv>
 
           <Movies onClick={(e) => {
-            Navigate("/movies")
+            Navigate("/movies/#cards")
             setIsActive("movies")
           }} className={isActive === "movies" ? 'item filter' : undefined}>
             <ImgSec>
-              <img src="assets/fillmovies.svg" alt="" className={isActive === "movies" ? 'block' : undefined}/>
-              <img src="assets/movies.svg" alt="" className={isActive === "movies" ? 'none' : undefined}/>
+              <img src="/assets/fillmovies.svg" alt="" className={isActive === "movies" ? 'block' : undefined}/>
+              <img src="/assets/movies.svg" alt="" className={isActive === "movies" ? 'none' : undefined}/>
             </ImgSec>
             <span>Movies</span>
           </Movies>
@@ -126,8 +126,8 @@ const Sidebar = () => {
             setIsActive("sports")
           }} className={isActive === "sports" ? 'item filter' : undefined}>
             <ImgSec>
-              <img src="assets/fillsports.svg" alt="" className={isActive === "sports" ? 'block' : undefined}/>
-              <img src="assets/sports.svg" alt="" className={isActive === "sports" ? 'none' : undefined}/>
+              <img src="/assets/fillsports.svg" alt="" className={isActive === "sports" ? 'block' : undefined}/>
+              <img src="/assets/sports.svg" alt="" className={isActive === "sports" ? 'none' : undefined}/>
             </ImgSec>
             <span>Sports</span>
           </Sports>

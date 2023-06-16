@@ -5,9 +5,6 @@ import { usePopup } from '../Context/Context';
 import { useEffect } from 'react';
 import { useFirebase } from '../firebase/firebase';
 import MoboSiderBar from './MoboSiderBar';
-import Sidebar from '../components/Sidebar';
-import Home from '../components/Home';
-import Cateogory from '../components/Category';
 
 const MoboGenres = () => {
     const [user, setUser] = useState();
@@ -17,10 +14,7 @@ const MoboGenres = () => {
     const { genresData, getDocsByQuery } = fb;
 
   const arr = [];
-  useEffect(()=>{
-    // if(!user){
-    //     getDocsByQuery()
-    // }
+  useEffect(()=>{    
     if(genresData){
         genresData.forEach((data) => {
           arr.push(data.data())
@@ -29,20 +23,9 @@ const MoboGenres = () => {
       }
     },[genresData])
 
-    window.addEventListener('resize',(e)=>{
-        if(e.target.innerWidth >= 768 && window.location.pathname === '/mobogenres'){
-            setIsPath(false)
-    
-        }
-        if(e.target.innerWidth <= 768 && window.location.pathname === '/mobogenres'){
-            setIsPath(true)
-        }
-    })
 
     return (
-        <>
-        {
-            isPath ?
+        
             <>
             <MoboNavbar />
             <Container>
@@ -66,10 +49,7 @@ const MoboGenres = () => {
             </Container>
             <MoboSiderBar />
             </>
-            :
-            <><Sidebar/><Home/><Cateogory/></>
-        }
-        </>
+        
     )
 }
 

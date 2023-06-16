@@ -14,11 +14,11 @@ const MySpace = () => {
     <Container>
     <Login/>
       <Header>
-        <img src="assets/stars.svg" alt="#" />
+        <img src="/assets/stars.svg" alt="#" />
       </Header>
       <Help>
       <a href="">
-        <img src="assets/question.svg" alt="#" />
+        <img src="/assets/question.svg" alt="#" />
         <span>Help & Support</span>
         </a>
       </Help>

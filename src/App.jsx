@@ -25,8 +25,6 @@ import EditProfile from './components/EditProfile';
 import ConfirmProfile from './components/ConfirmProfile';
 import Logout from './components/Logout';
 import { useFirebase } from './firebase/firebase';
-import Header from './components/Header';
-import Channels from './categories/Channels';
 import MoboLogin from './MoboComp/MoboLogin';
 import MoboLogout from './MoboComp/MoboLogout';
 import MoboChannels from './MoboComp/MoboChannels';
@@ -35,13 +33,10 @@ import MoboShows from './MoboComp/MoboShows';
 import Disney from './CateogoryFolders/Disney';
 import SpaceLogin from './components/SpaceLogin';
 import MoboLanguages from './MoboComp/MoboLanguages';
-import New from './components/New';
 import MoboGenres from './MoboComp/MoboGenres';
 const App = () => {
-  // const Google = useGoogleAuth()
   const firebase = useFirebase();
   const { currentUser } = firebase;
-  // const {googleCurrentUser} = Google;
 
   const router = createBrowserRouter([
     {
@@ -111,9 +106,9 @@ const App = () => {
     {
       path:"/mobolanguages",
       element: <MoboLanguages/>
-    },
+    },  
     {
-      path:"/shows",
+      path:"/shows/view/:imdbID",
       element:<Shows/>
     },
     {
@@ -121,7 +116,7 @@ const App = () => {
       element:<><Tv/></>
     },
     {
-      path:"/mshows",
+      path:"/mshows/view/:imdbID",
       element:<MoboShows/>
     },
     {

@@ -40,9 +40,6 @@ const Home = () => {
 
     return (
         <>
-            <img src="assets/di.svg" className="disney" alt="" />
-            <img src="assets/star.svg" className="star" alt="" />
-            <img src="assets/polygon.svg" className="polygon" alt="" />
             <Mobo>
                 <MoboHeader />
             </Mobo>
@@ -71,20 +68,20 @@ const Home = () => {
             </MoboMainHome>
             <MoboRes >
                 <div onClick={BottomBarList}>
-                    <img src="assets/home.svg" alt="" className='bottombarclass bottombaractive' onClick={() => navigate("/")} />
+                    <img src="/assets/home.svg" alt="" className='bottombarclass bottombaractive' onClick={() => navigate("/")} />
                     <span>Home</span>
                 </div>
                 <div onClick={BottomBarList}>
-                    <img src="assets/tv.svg" alt=""  onClick={() => navigate("/tv")} />
+                    <img src="/assets/tv.svg" alt=""  onClick={() => navigate("/tv")} />
                     <span>TV</span>
                 </div>
-                <img src="assets/di.svg" alt="" onClick={()=>navigate("/disney")}/>
+                <img src="/assets/di.svg" alt="" onClick={()=>navigate("/disney")}/>
                 <div onClick={BottomBarList}>
-                    <img src="assets/movies.svg" alt=""  onClick={() => navigate("/movies")} />
+                    <img src="/assets/movies.svg" alt=""  onClick={() => navigate("/movies")} />
                     <span>Movies</span>
                 </div>
                 <div onClick={BottomBarList}>
-                    <img src="assets/sports.svg" alt="" onClick={() => navigate("/sports")} />
+                    <img src="/assets/sports.svg" alt="" onClick={() => navigate("/sports")} />
                     <span>Sports</span>
                 </div>
             </MoboRes>
@@ -100,7 +97,7 @@ align-items: end;
 justify-content: space-between;
 padding-bottom: 1em;
 background:linear-gradient(178.5deg,rgba(15,16,20,0) 57.9%,rgba(15,16,20,.01) 64.8%,rgba(15,16,20,.05) 67.56%,#0c0d11 96.94%),linear-gradient(90deg,#01040f,rgb(7 8 15 / 85%) 16.15%,rgb(4 5 7 / 73%) 25.52%,rgba(15,16,20,.6) 32.81%,rgba(15,16,20,.05) 52.08%,rgba(15,16,20,0) 65.1%),url(https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/8742/1478742-i-03dfaf5cb374) no-repeat center/cover;
-/* background:url(https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/8742/1478742-i-03dfaf5cb374) no-repeat center/cover; */
+background:url(https://img1.hotstarext.com/image/upload/f_auto/sources/r1/cms/prod/8742/1478742-i-03dfaf5cb374) no-repeat center/cover;
 background-attachment: fixed!important;
 position: relative;
 &:after{
@@ -118,7 +115,7 @@ const MoboRes = styled.div`
 position: fixed;
 bottom: 0;
 width:100%;
-height: 16%;
+height: 12%;
 display: none;
 z-index:99999;
 justify-content: space-between;
@@ -132,7 +129,7 @@ height:50%;
 margin: auto 0em;
 gap:.5em;
 img{
-  width:60%;
+  width:56%;
   height:100%;
   @media(max-width:400px){
    width:50%;

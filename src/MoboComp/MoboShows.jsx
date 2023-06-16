@@ -3,97 +3,145 @@ import styled from 'styled-components';
 import MoboNavbar from './MoboNavbar';
 import { Lang } from '../data';
 import MoreLikeThis from '../categories/MoreLikeThis';
-import Action from '../categories/Action';
 import { useEffect } from 'react';
 import { firestore, useFirebase } from '../firebase/firebase';
 import FooterFunc from '../components/Footer';
-import { collection, onSnapshot } from 'firebase/firestore';
-import MoboHeader from './MoboHeader';
+import axios from 'axios';
 import { usePopup } from '../Context/Context';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 const MoboShows = () => {
     const [value, setValue] = useState(0)
-    const [user, setUser] = useState();
+    const [data, setData] = useState(null)
     const fb = useFirebase();
-    const {getDocsByQuery, currentUser} = fb;
+    const { getDocsByQuery, currentUser } = fb;
     const Func = usePopup();
     const { sideBar, setSideBar } = Func;
     const navigate = useNavigate();
-    useEffect(()=>{
+    const params = useParams();
+
+    useEffect(() => {
         getDocsByQuery()
-    },[])
-    useEffect(()=>{
-        const colRef = collection(firestore, "moboshows")
-        const unsubscribe = onSnapshot(colRef,(data)=>{
-            const newData = data.docs.map((doc)=>doc.data())
-            setUser(newData)
-        })
-        return ()=>{
-            unsubscribe()
-        }
-    },[])
-  return (
-    <>
-    <Container>
-    <MoboNavbar/>
-       <Main style={{background: `url(${user && user[0].img}) no-repeat center/cover`}}>
-       <Watch>
-        <span>SUBSCRIBER</span>
-        <div>
-            <img src="assets/play.svg" alt="" />
-            <span> - Watch</span>
-        </div>
-       </Watch>
-       </Main>
-       <Languages>
-        {
-            Lang.map((val,ind)=>{
-              return(
-                <span key={ind} className={value === ind ? 'langActive': 'undefined'} onClick={()=>setValue(ind)}>{val}</span>
-              )
-            })
-        }
-       </Languages>
-       <Description>
-        <span style={{display:'flex'}}><span style={{color:'blue',fontSize:'.8rem'}}>Comedy</span><img src="assets/dot.svg" alt="" style={{
-            filter:'invert(1)',
-            width:'15px',
-            height:'15px'
-            }}/> <span style={{color:'blue',fontSize:'.8rem'}}>Malayalam</span></span>
+    }, [])
 
-        <span style={{color:'#fff',display:'flex',fontSize:'.85rem'}}><span>2023</span><img src="assets/dot.svg" alt="" style={{
-            filter:'invert(1)',
-            width:'15px',
-            height:'15px'
-            }}/><span>U/A 13+</span></span>
+    useEffect(() => {
+        const fetchDetails = async () => {
+            try {
+                const userData = [];
+                const details = await axios.get(`http://www.omdbapi.com?i=${params.imdbID}&apiKey=5b411b8a&plot=full`)
+                userData.push(details.data)
+                setData(userData)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchDetails()
+    }, [])
 
-        <span style={{color:'#fff', fontSize:'.8rem'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure aliquid sit unde id, asperiores ratione, autem in cupiditate magni quo temporibus placeat officiis adipisci, porro soluta expedita et? Inventore, corporis?</span>
-        <Social>
-            <img src="assets/plus.svg" alt="" />
-            <img src="assets/fb.svg" alt="" />
-            <img src="assets/twitter.svg" alt="" />
-            <img src="assets/link.svg" alt="" />
-        </Social>
-       </Description>
-       <TrailersExtras>
-    
-        <span>Trailers & Extras</span>
-         <Trailer style={{background: `url(${user && user[0].img}) no-repeat center/cover`}}>
-            <div>
-                <img src="assets/play.svg" alt="" style={{
-            width:'18px',
-            height:'18px'
-            }}/>
-                <span> - Trailer</span>
-            </div>
-                <span style={{color:'#fff',fontSize:'.7rem',fontWeight:'500', position:'absolute',right:'10px',top:'10px'}}>1 min</span>
-         </Trailer>
-       </TrailersExtras>
-    <div style={{paddingLeft:'1em', width:'100%',paddingTop:'2.5em'}}>
-       <MoreLikeThis/>
-       </div>
-       <FooterFunc/>
-    </Container>
+    return (
+        <>
+            <Container>
+                <MoboNavbar />
+                {data && data.map((val) => {
+                    return (
+                        <Main style={{ background: `url(${val.Poster}) no-repeat center/cover` }} key={val.imdbID *7}>
+                            <Watch>
+                                <span>SUBSCRIBER</span>
+                                <div>
+                                    <img src="/assets/play.svg" alt="" />
+                                    <span> <span>{val.Title} </span>- Watch</span>
+                                </div>
+                            </Watch>
+                        </Main>
+                    )
+                })
+                }
+                <Languages>
+                    {
+                        Lang.map((val, ind) => {
+                            return (
+                                <span key={ind} className={value === ind ? 'langActive' : 'undefined'} onClick={() => setValue(ind)}>{val}</span>
+                            )
+                        })
+                    }
+                </Languages>
+                <Description>
+                    {
+                        data && data.map((val) => {
+                            return (
+                                <>
+                                <span style={{ display: 'flex' }} key={val.imdbID *2}>
+                                    <span
+                                        style={{
+                                            color: 'blue',
+                                            fontSize: '.8rem'
+                                        }} key={val.imdbID *3}>{`${val.Genre}`}
+                                    </span>
+                                </span>
+
+                    <span
+                        style={{
+                            color: '#fff',
+                            display: 'flex',
+                            fontSize: '.85rem'
+                        }} key={val.imdbID *4}>
+                        <span>{val.Year}</span>
+                        <img
+                            src="/assets/dot.svg"
+                            alt=""
+                            style={{
+                                filter: 'invert(1)',
+                                width: '15px',
+                                height: '15px'
+                            }} /><span>{val.Website}</span>
+                            </span>
+                            
+
+                    <span 
+                    style={{ 
+                        color: '#fff', 
+                        fontSize: '.8rem' }} key={val.imdbID *5}>{val.Plot}</span>
+                    </>
+                            )
+                        })
+                    }
+                    <Social>
+                        <img src="/assets/plus.svg" alt="" />
+                        <img src="/assets/fb.svg" alt="" />
+                        <img src="/assets/twitter.svg" alt="" />
+                        <img src="/assets/link.svg" alt="" />
+                    </Social>
+                </Description>
+                <TrailersExtras>
+
+                    <span>Trailers & Extras</span>
+                    {
+                        data && data.map((val,ind) => {
+                            return (
+                                <Trailer style={{ background: `url(${val.Poster}) no-repeat center/cover` }} key={ind*3}>
+                                    <div>
+                                        <img src="/assets/play.svg" alt="" style={{
+                                            width: '18px',
+                                            height: '18px'
+                                        }} />
+                                        <span><span>{val.Title} </span>- Trailer</span>
+                                    </div>
+                                    <span style={{ 
+                                        color: '#fff', 
+                                        fontSize: '.7rem', 
+                                        fontWeight: '500', 
+                                        position: 'absolute', 
+                                        right: '10px', 
+                                        top: '10px' }}>1 min</span>
+                                </Trailer>
+                            )
+                        })
+                    }
+                </TrailersExtras>
+                <div style={{ paddingLeft: '1em', width: '100%', paddingTop: '2.5em' }}>
+                    <MoreLikeThis />
+                </div>
+                <FooterFunc />
+            </Container>
             <MoboSideBar className={sideBar ? 'sidebar' : null}>
                 <LogIn onClick={
                     () => {
@@ -102,39 +150,66 @@ const MoboShows = () => {
                     }
                 }
                 >
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
                         {currentUser ?
-                            <img src={currentUser.photoURL} style={{ filter: 'unset' }} alt="" />
+                            <img
+                                src={currentUser.photoURL}
+                                style={{ filter: 'unset' }} alt="" />
                             :
                             <img src="assets/humanuser.svg" alt="" />
                         }
                         <div>
                             {currentUser ?
                                 <>
-                                    <span>{currentUser.displayName}</span><span style={{ color: '#8f98b2', fontWeight: '500', letterSpacing: '.5px' }}>Logged in via Google</span>
+                                    <span>{currentUser.displayName}</span>
+                                    <span
+                                        style={{
+                                            color: '#8f98b2',
+                                            fontWeight: '500',
+                                            letterSpacing: '.5px'
+                                        }}>Logged in via Google</span>
                                 </>
                                 :
                                 <>
-                                    <span>Log in</span><span style={{ color: '#8f98b2', fontWeight: '500', letterSpacing: '.5px' }}>Logged in via Google</span>
+                                    <span>Log in</span>
+                                    <span
+                                        style={{
+                                            color: '#8f98b2',
+                                            fontWeight: '500',
+                                            letterSpacing: '.5px'
+                                        }}>Logged in via Google</span>
                                 </>
                             }
                         </div>
                     </div>
-                    <img src="assets/arright.svg" alt="" />
+                    <img src="/assets/arright.svg" alt="" />
                 </LogIn>
                 <WatchList>
                     <span>Watchlist</span>
                 </WatchList>
                 <Items>
-                    <li onClick={()=>navigate("/mobochannels")}><img src="assets/channel.svg" alt="" /><span>Channels </span></li>
-                    <li><img src="assets/lang.svg" alt="" /><span>Languages </span></li>
-                    <li><img src="assets/genres.svg" alt="" /><span>Genres </span></li>
+                    <li onClick={() => navigate("/mobochannels")}>
+                        <img src="/assets/channel.svg" alt="" /><span>Channels </span>
+                    </li>
+                    <li>
+                        <img src="/assets/lang.svg" alt="" />
+                        <span>Languages </span>
+                    </li>
+                    <li>
+                        <img src="/assets/genres.svg" alt="" />
+                        <span>Genres </span>
+                    </li>
                 </Items>
             </MoboSideBar>
             <SideBarBackground className={sideBar ? 'sidebarbg' : null} onClick={() => setSideBar(false)}>
             </SideBarBackground>
-    </>
-  )
+        </>
+    )
 }
 
 export default MoboShows;

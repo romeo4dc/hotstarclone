@@ -99,35 +99,7 @@ const ActionComp = () => {
                 }}
 
                   onMouseLeave={() => { setHover(false) }} key={ind} className='cards' >
-
-                  {
-                    hover &&
-                    (value === ind &&
-                      <video src={videoUrls[ind]} autoPlay loop muted />
-                    )
-                  }
-
-                  <img src={val.img} alt="" />
-                  <Sound>{
-                    hover &&
-                    value === ind &&
-                    (speaker && <img src="assets/speakeron.svg" alt="" onClick={() => {
-                      setSpeaker(false)
-                      console.log('on')
-                      video.muted = true;
-                      video.volume = 0.5
-                    }} />
-                    )}
-                    {
-                      hover &&
-                      value === ind &&
-                      (!speaker && <img src="assets/speakeroff.svg" alt="" onClick={() => {
-                        setSpeaker(true)
-                        video.muted = false
-                        console.log('off')
-                      }} />
-                      )}
-                  </Sound>
+                  <img src={val.img} alt="" />                  
                   <Details>
                     <button><img src="assets/play.svg" alt="" /><span>Watch Now</span></button>
                     <div>
@@ -152,18 +124,6 @@ const ActionComp = () => {
 
 export default ActionComp;
 
-const Sound = styled.div`
-position: absolute;
-right: .5em;
-bottom: 60%;
-z-index: 100;
-cursor: pointer;
-img{
-  width:15px!important;
-  height: 15px!important;
-  filter: invert(1);
-}
-`;
 const Divide = styled.div`
 background-image:linear-gradient(to top, rgba(4,8,15,0), #16181f, #16181f);
 width:92.8%;

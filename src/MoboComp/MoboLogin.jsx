@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { useFirebase } from '../firebase/firebase';
 import { useNavigate } from 'react-router-dom';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 const MoboLogin = () => {
+    const auth = getAuth();
     const [value, setValue] = useState("");
     const [dis, setDis] = useState(false);
     const [googlefb, setGoogleFb] = useState(false);
@@ -10,10 +12,16 @@ const MoboLogin = () => {
     const navigate = useNavigate();
     const { expandForm, setExpandForm,setPhoneNumber, reqOtp, verifyOTP, signInWithFacebook, signInWithGoogle } = OTPFunc;
 
+    useEffect(()=>{
+    const state = onAuthStateChanged(auth,(user)=>{
+        user ? navigate("/") : navigate("/mobologin")
+    });
+    return () => state();
+    },[])
     
     return (
         <Container>
-            <img src="assets/dph.svg" alt="" />
+            <img src="/assets/dph.svg" alt="" />
             <LoginSec style={{ display: dis ? 'none' : 'flex' }}>
                 <span>Login to continue</span>
                 <LoginOpt>
@@ -33,7 +41,7 @@ const MoboLogin = () => {
                     </InputSec>
                 </LoginOpt>
               { googlefb &&  <GoogleFb className='pranim'>
-                <img src="assets/cross.svg" alt="" onClick={()=>setGoogleFb(false)}/>
+                <img src="/assets/cross.svg" alt="" onClick={()=>setGoogleFb(false)}/>
                   <div onClick={()=>{
                     signInWithGoogle()
                     setGoogleFb(false)

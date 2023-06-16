@@ -99,7 +99,7 @@ const Login = () => {
                                     { opt &&
                                         <Other>
                                         <span>or</span>
-                                        <span onClick={() => setGoogleFb(true)}>Have a Facebook/Email account?</span>
+                                        <span onClick={() => setGoogleFb(true)}>Have a Facebook/Google account?</span>
                                     </Other>}
                                 </LoginSec>
                                 {googlefb && <GoogleFb className='gfbanim'>

@@ -1,115 +1,129 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import MainHome from './MainHome';
+import MoreLikeThis from "../categories/MoreLikeThis";
 import Sidebar from "./Sidebar"
 import { usePopup } from '../Context/Context';
 import { useNavigate } from 'react-router-dom';
 import { firestore, useFirebase } from '../firebase/firebase';
-import { QuerySnapshot, collection, doc, getDocs, onSnapshot, query, updateDoc } from 'firebase/firestore';
+import axios from 'axios';
 import { useEffect } from 'react';
-import MoreLikeThis from "../categories/MoreLikeThis";
+import { useParams } from 'react-router-dom';
 import FooterFunc from './Footer';
-const Shows = () => {
-    const [user, setUser] = useState();
+
+const Shows = () => {    
     const [active, setActive] = useState(false);
+    const [data, setData] = useState(null);
     const fb = useFirebase();
     const navigate = useNavigate();
+    const params = useParams();
     const context = usePopup();
     const { Bg, plus, Plusfunc, chk, Chkfunc, cInfo, pInfo } = context;
     const { showsArr, showsData, getDocsByQuery } = fb;
 
-    useEffect(()=>{
-        const colRef = collection(firestore, "shows")
-        const unsubscribe = onSnapshot(colRef,(data)=>{
-            const newData = data.docs.map((doc)=>doc.data())
-            setUser(newData)
-        })
-        return ()=>{
-            unsubscribe()
+    useEffect(() => {
+        const fetchDetails = async () => {
+            try {
+                const userData = [];
+                const details = await axios.get(`http://www.omdbapi.com?i=${params.imdbID}&apiKey=5b411b8a&plot=full`)
+                userData.push(details.data)
+                setData(userData)
+                console.log("df")
+            } catch (err) {
+                console.log(err)
+            }
         }
-    },[])
-    const Func=()=>{
+        fetchDetails()
+    }, [])
+    const Func = () => {
         let nav = document.querySelector('.navbar')
-        if(window.pageYOffset >= 550){
-            nav.style.padding="3em 0em"
+        if (window.pageYOffset >= 550 && nav) {
+            nav.style.padding = "3em 0em"
             nav.style.position = "sticky";
         }
-        if(window.pageYOffset <= 550 ){
-            nav.style.padding="1.5em 0em"
+        if (window.pageYOffset <= 550 && nav) {
+            nav.style.padding = "1.5em 0em"
         }
     }
     window.addEventListener('scroll', Func)
     return (
         <>
-        <Sidebar/>
-        <Container className="main" style={{background: `url(${user && user.length > 0 ? user[0].img : ''}) no-repeat center/cover`}}>
-        <Left>  
-            <Title>
-                <span>2023</span>
-                <span>-</span>
-                <span>2h 11m</span>
-                <span>-</span>
-                <span>Hindi</span>
-                <span>-</span>
-                <span>U/A 13+</span>
-            </Title>
-            <Desc>
+            <Sidebar />
             {
-                user &&
-                user.map((val,ind)=>{
-                    return(
-                <p key={ind}>{val.desc}</p>
-                )
+                data && data.map((val, ind) => {
+                    return (
+                        <Container className="main" style={{ background: `url(${val.Poster}) no-repeat center center/cover ` }} key={val.imdbID + ind}>
+                            <Left>
+                                <Title>
+
+                                    <span>{`${val.Year} - ${val.Runtime} - ${val.Language}`}</span>
+
+                                </Title>
+                                <Desc>
+
+                                    <p>{val.Plot}</p>
+
+                                </Desc>
+                                <SubTitle>
+                                    <span>{val.Title}</span>
+                                </SubTitle>
+                                <ButtonSec onClick={Bg}>
+                                    <Buttons>
+                                        <img src="/assets/play.svg" alt="" />
+                                        <Button
+                                            onClick={() => navigate('/subscribe')}>Subscribe to Watch
+                                        </Button>
+                                    </Buttons>
+
+                                    <Plus
+                                        style={{ display: plus }}
+                                        onClick={Plusfunc}>+</Plus>
+
+                                    <img
+                                        style={{ display: chk }}
+                                        onClick={Chkfunc}
+                                        src="/assets/check.svg"
+                                        alt="#" />
+
+                                    <span className='watch' style={{ display: cInfo }}>Watchlist <span></span></span>
+                                    <span className='add' style={{ display: pInfo }}>Add to watchlist <span></span></span>
+                                </ButtonSec>
+                            </Left>
+                        </Container>
+                    )
                 })
             }
-            </Desc>
-            <SubTitle>
-            {
-                user &&
-                user.map((val,ind)=>{
-                    return(
-                <span key={ind}>{val.subtitle}</span>
-                )
-                })
-            }
-            </SubTitle>
-            <ButtonSec onClick={Bg}>
-                <Buttons>
-                    <img src="assets/play.svg" alt="" />
-                    <Button onClick={()=>navigate('/subscribe')}>Subscribe to Watch</Button>
-                </Buttons>
-                <Plus style={{display:plus}} onClick={Plusfunc}>+</Plus>
-                <img style={{display:chk}} onClick={Chkfunc} src="assets/check.svg" alt="#" />
-                <span className='watch' style={{display:cInfo}}>Watchlist <span></span></span>
-                <span className='add' style={{display:pInfo}}>Add to watchlist <span></span></span>
-            </ButtonSec>
-        </Left>
-        </Container>
-        <Bottom>
-        <Navbar className="navbar">
-            <span onClick={()=>setActive(true)}><a href="#MoreLikeThis" className={active ? 'navActive': ''}>More Like This</a></span>
-            <span onClick={()=>setActive(false)}><a href="#Trailers&More" className={!active ? 'navActive': ''}>Trailers & More</a></span>
-            </Navbar>
-            <div id="MoreLikeThis">                
-            <MoreLikeThis/>
-            </div>
-            <Trailer id="Trailers&More">
-                <Heading>
-                <span>Trailer & More</span></Heading>
-                    <img src={user && user.length > 0 && user[0].img} alt="" />
-                 <Details>
-                 <img src="assets/play.svg" alt="" />
-                    <span>1m</span>
-                 </Details>
-                    <Name>
-                        {
-                            user &&
-                            <span>{user[0].subtitle}</span>
-                        }
-                    </Name>
-            </Trailer>
-        </Bottom>
-        <div style={{marginLeft:'10px',paddingTop:'15em' }}><FooterFunc/></div>
+            <Bottom>
+                <Navbar className="navbar">
+                    <span onClick={() => setActive(true)}><a href="#MoreLikeThis" className={active ? 'navActive' : ''}>More Like This</a></span>
+                    <span onClick={() => setActive(false)}><a href="#Trailers&More" className={!active ? 'navActive' : ''}>Trailers & More</a></span>
+                </Navbar>
+                <div id="MoreLikeThis">
+                    <MoreLikeThis />
+                </div>
+                {
+                    data && data.map((val,ind) => {
+                        return (
+                            <Trailer id="Trailers&More" key={val.imdbID + (6*ind)}>
+                                <Heading>
+                                    <span>Trailer & More</span></Heading>
+
+                                <img src={val.Poster} alt="" />
+
+                                <Details>
+                                    <img src="/assets/play.svg" alt="" />
+                                    <span>1m</span>
+                                </Details>
+                                <Name>
+
+                                    <span>{val.Title}</span>
+
+                                </Name>
+                            </Trailer>
+                        )
+                    })
+                }
+            </Bottom>
+            <div style={{ marginLeft: '10px', paddingTop: '15em' }}><FooterFunc /></div>
         </>
     )
 }
@@ -243,14 +257,9 @@ const Title = styled.div`
 display:flex;
 gap:.5em;
 align-items: center;
-span:last-child{
-background: hsla(0,0%,100%,.2);
-border-radius: 4px;
-/* height: 100%; */
-padding: .3em .7em;
-}
 span{
 font-size: 16px;
+word-spacing: .5em;
 font-weight: 600;
 line-height: 20px;
 color: hsla(0,0%,100%,.84);

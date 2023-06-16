@@ -1,40 +1,43 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useFirebase } from '../firebase/firebase';
 import { usePopup } from '../Context/Context';
+import { getAuth } from 'firebase/auth';
+const auth  = getAuth();
 
 const MoboSiderBar = () => {
     const navigate = useNavigate();
     const Func = usePopup();
     const fb = useFirebase();
-    const { currentUser } = fb;
-    const { sideBar, setSideBar, setIsPath } = Func;
+    // const { currentUser } = fb;
+    const { sideBar, setSideBar, setIsPath } = Func;  
+
     return (
         <>
             <MoboSideBar className={sideBar ? 'sidebar' : null}>
                 <LogIn onClick={
                     () => {
-                        navigate(currentUser ? "/mobologout" : "/mobologin")
+                        navigate(auth.currentUser ? "/mobologout" : "/mobologin")
                         setIsPath(true)
                         setSideBar(false)
                     }
                 }>
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                        { currentUser ?
-                         currentUser.photoURL ?
-                           ( <img src={currentUser.photoURL} style={{ filter: 'unset' }} alt="" />)
+                        { auth.currentUser ?
+                         auth.currentUser ?
+                           ( <img src={auth.currentUser.photoURL} style={{ filter: 'unset' }} alt="" />)
                             :
-                            (<img src="assets/humanuser.svg" alt="" />)
+                            (<img src="/assets/humanuser.svg" alt="" />)
                             :
-                            (<img src="assets/humanuser.svg" alt="" />)
+                            (<img src="/assets/humanuser.svg" alt="" />)
                         }
                         <div>
-                            {currentUser ?
+                            {auth.currentUser ?
                                 <>
-                                    <span>{currentUser.displayName}</span><span style={{ color: '#8f98b2', fontWeight: '500', letterSpacing: '.5px' }}>{
+                                    <span>{auth.currentUser.displayName}</span><span style={{ color: '#8f98b2', fontWeight: '500', letterSpacing: '.5px' }}>{
 
-                                        currentUser.email ? 
+                                        auth.currentUser.email ? 
                                         <span style={{ color: '#8f98b2', fontWeight: '500', letterSpacing: '.5px' }}> Logged in via Google</span>
                                             :
                                         <span style={{ color: '#8f98b2', fontWeight: '500', letterSpacing: '.5px' }}>Logged in via Phone</span>

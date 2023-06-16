@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
 import MoboNavbar from './MoboNavbar';
 import Sidebar from '../components/Sidebar';
@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useFirebase } from '../firebase/firebase';
 import MoboSiderBar from './MoboSiderBar';
-import Home from '../components/Home';
 
 const MoboLanguages = () => {
     const [user, setUser] = useState();
@@ -19,33 +18,19 @@ const MoboLanguages = () => {
     const navigate = useNavigate()
 
   const arr = []; 
-  useEffect(()=>{
-    //   if(!user){
-    //       debugger
-    //       getDocsByQuery()
-    //     }
+  
+    useEffect(()=>{ 
+      getDocsByQuery()   
     if(languagesData){
         languagesData.forEach((data) => {
           arr.push(data.data())
         }) 
         setUser(arr)
       }
-    },[languagesData])
+    },[!languagesData])
 
-    window.addEventListener('resize',(e)=>{
-        if(e.target.innerWidth >= 768 && window.location.pathname === '/mobolanguages'){
-            setIsPath(false)
-
-        }
-        if(e.target.innerWidth <= 768 && window.location.pathname === '/mobolanguages'){
-            setIsPath(true)
-        }
-    })
 
     return (
-        <>
-         {
-            isPath ?
             <>
             <MoboNavbar />
             <Container>
@@ -68,10 +53,6 @@ const MoboLanguages = () => {
                 </Channels>
             </Container>
             <MoboSiderBar />
-            </>
-            :
-            <><Sidebar/><Home/><Category/></>
-        }
             </>
     )
 }

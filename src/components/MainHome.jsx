@@ -37,11 +37,11 @@ const MainHome = () => {
                 </SubTitle>
                 <ButtonSec  onClick={Func.Bg}>
                     <Buttons>
-                        <img src="assets/play.svg" alt="" />
+                        <img src="/assets/play.svg" alt="" />
                         <Button onClick={()=>navigate('/subscribe') }>Watch Now</Button>
                     </Buttons>
                     <Plus style={{display:Func.plus}} onClick={Func.Plusfunc}>+</Plus>
-                    <img style={{display:Func.chk}} onClick={Func.Chkfunc} src="assets/check.svg" alt="#" />
+                    <img style={{display:Func.chk}} onClick={Func.Chkfunc} src="/assets/check.svg" alt="#" />
                     <span className='watch' style={{display:Func.cInfo}}>Watchlist <span></span></span>
                     <span className='add' style={{display:Func.pInfo}}>Add to watchlist <span></span></span>
                 </ButtonSec>

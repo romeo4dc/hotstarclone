@@ -88,54 +88,19 @@ const StarPlusComp = () => {
           }>
 
           {user ?
-                      user.map((val, ind) => {
-                <span>sdasdas</span>
+                      user.map((val, ind) => {                
               return (
                 <Card onMouseEnter={() => {
                   setValue(ind)
-                  setHover(true)
-                  console.log('res')
-                  let video = document.querySelector('video');
-                  if(video){
-                  video.muted = false;
-                  video.volume = 1;
-                  console.log("yes")
-                  }
+                  setHover(true)                       
                 }}
 
                   onMouseLeave={() => { 
                     setHover(false) 
                     }} key={ind} className="cards" 
-                    >
+                    >                  
 
-                  {
-                    hover &&
-                    (value === ind &&
-                      <video src={videoUrls[ind]} autoPlay loop muted />
-                    )
-                  }
-
-                  <img src={val.img} alt="" />
-                  <Sound>{
-                    hover &&
-                    value === ind &&
-                    (speaker && <img src="assets/speakeron.svg" alt="" onClick={() => {
-                      setSpeaker(false)
-                      console.log('on')
-                      // video.muted = false;
-                      // video.volume = 0.5
-                    }} />
-                    )}
-                    {
-                      hover &&
-                      value === ind &&
-                      (speaker && <img src="assets/speakeroff.svg" alt="" onClick={() => {
-                        setSpeaker(true)
-                        // video.muted = false
-                        // console.log('off')
-                      }}/>
-                      )}
-                  </Sound>
+                  <img src={val.img} alt="" />                  
                   <Details>
                     <button><img src="assets/play.svg" alt="" /><span>Watch Now</span></button>
                     <div>

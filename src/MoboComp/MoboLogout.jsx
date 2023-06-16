@@ -21,19 +21,8 @@ const MoboLogout = () => {
     useEffect(()=>{
         AuthUser()
     },[])
-
-    window.addEventListener('resize',(e)=>{
-        if(e.target.innerWidth >= 768 && window.location.pathname === '/mobologout'){
-            setIsPath(false)
-        }
-        if(e.target.innerWidth <= 768 && window.location.pathname === '/mobologout'){
-            setIsPath(true)
-        }
-    })
     return (
-        <>
-        {
-            isPath ?
+        
             <>
             <MoboNavbar />
             <Container>
@@ -100,10 +89,7 @@ const MoboLogout = () => {
             </MoboRes>
            <MoboSiderBar/>
            </>
-           :
-           <><Sidebar/><Home/><Cateogory/></>
-           }
-        </>
+        
     )
 }
 

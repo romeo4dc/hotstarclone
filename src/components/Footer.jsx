@@ -1,13 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
 
-
-//   )
-// }
-
-
-// export default Footer;
-
 const FooterFunc = () => {
   return (
 <>
@@ -20,7 +13,9 @@ const FooterFunc = () => {
     </li>
     <li style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
         <span>View Website in</span>
-        <span style={{ fontSize: '12px', color: "#8f98b2", display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100px', marginLeft: '-46px', marginTop: '-38px' }}> <img src="assets/check.svg" style={{ transform: 'scale(.25)', }} /><span style={{ marginLeft: '-22px', fontSize: '12px', color: "#8f98b2" }}>English</span></span>
+        <span style={{ fontSize: '12px', color: "#8f98b2", display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100px', marginLeft: '-46px', marginTop: '-38px' }}>
+         <img src="/assets/check.svg" style={{ transform: 'scale(.25)', }} />
+         <span style={{ marginLeft: '-22px', fontSize: '12px', color: "#8f98b2" }}>English</span></span>
     </li>
     <li>
         <span>Need Help?</span>
@@ -30,8 +25,8 @@ const FooterFunc = () => {
     <li>
         <span>Connect with Us</span>
         <div>
-            <img src="assets/fbn.svg" alt="" />
-            <img src="assets/ntwitter.svg" alt="" />
+            <img src="/assets/fbn.svg" alt="" />
+            <img src="/assets/ntwitter.svg" alt="" />
         </div>
     </li>
 </Info>
@@ -43,8 +38,8 @@ const FooterFunc = () => {
         <span>Terms Of Use</span><span>Privacy Policy</span><span>FAQ</span>
     </InfoDesc>
     <Store>
-        <img src="assets/gplay.png" alt="#" />
-        <img src="assets/ios.png" alt="#" />
+        <img src="/assets/gplay.png" alt="#" />
+        <img src="/assets/ios.png" alt="#" />
     </Store>
 </RightDesc>
 </Footer>
@@ -64,15 +59,15 @@ const FooterFunc = () => {
      <LeftIcons>
          <span>Connect with us</span>
          <SocialIcons>
-           <img src="assets/fb.svg" alt="" />
-           <img src="assets/twitter.svg" alt="" />
+           <img src="/assets/fb.svg" alt="" />
+           <img src="/assets/twitter.svg" alt="" />
          </SocialIcons>
      </LeftIcons>
      <RightIcons>
          <span>Disney+Hotstar App</span>
          <StoreIcons>
-         <img src="assets/gplay.png" alt=""/>
-         <img src="assets/ios.png" alt="" />
+         <img src="/assets/gplay.png" alt=""/>
+         <img src="/assets/ios.png" alt="" />
          </StoreIcons>
      </RightIcons>
    </Right>

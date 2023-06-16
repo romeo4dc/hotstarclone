@@ -156,7 +156,7 @@ if(currentUser.email){
         setShowsData(showsSnap);
         setAllChannelsData(allChannelsSnap);
         setGenresData(genresSnap);
-        setLanguagesData(languagesSnap);
+        setLanguagesData(languagesSnap);      
       }
       const storageRef = ref(storage, 'action');
 
@@ -170,12 +170,13 @@ if(currentUser.email){
       // }
       const updateData = async (e) => { 
         const result = doc(firestore, "shows" , "ADAma7RMCIYLBsV2SGUa")
-        console.log(e.target)
+        
         if(e.target.classList.contains('cards')){
         await updateDoc(result,{
-          img:e.target.children[1].src,
-          desc:e.target.children[3].children[1].children[1].textContent,
-          subtitle:e.target.children[3].children[1].children[0].textContent 
+          img:e.target.children[0].src,
+          desc:e.target.children[1].children[1].children[2].textContent,
+          subtitle:e.target.children[1].children[1].children[1].textContent,
+          title:e.target.children[1].children[1].children[0].textContent,
         })
       }
       }

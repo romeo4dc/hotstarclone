@@ -24,11 +24,11 @@ const Navbar = () => {
     return (
         <Container onMouseEnter={popup.TvDownFunc}> 
             <Left>
-                <img src="assets/hamicon.svg" alt="" 
+                <img src="/assets/hamicon.svg" alt="" 
                     onMouseEnter={()=> {popup.setPp("0.4em 0em")
                     popup.setPh("135px")
             }}  />
-                <img src="assets/logo.svg" alt="" onMouseEnter={popup.TvDownFunc} onClick={() => {Navigate("/")} } onMouseLeave={()=> {popup.setPp("0")
+                <img src="/assets/logo.svg" alt="" onMouseEnter={popup.TvDownFunc} onClick={() => {Navigate("/")} } onMouseLeave={()=> {popup.setPp("0")
             popup.setPh("0px")
             }}/>
                 <NavItems/>

@@ -7,167 +7,127 @@ import { usePopup } from '../Context/Context';
 import { useState } from 'react';
 import { useEffect } from 'react';
 const StarBharatComp = () => {
-    const starBharat = useFirebase();
-    const [videoUrls, setVideoUrls] = useState([]);
-    const [hover, setHover] = useState(false);
-    const [speaker, setSpeaker] = useState(false);
-    const [value, setValue] = useState()
-    const [isEnter, setIsEntered] = useState(false)
-    const { storageRef } = starBharat;
-    const [user, setUser] = useState();
-    const [cardContainer, setCardContainer] = useState(0)
-    const arr = [];
-    useEffect(() => {
-      if (starBharat.bharatData) {
-        starBharat.bharatData.forEach((data) => {
-          arr.push(data.data())
-        });
-        setUser(arr)
-      }
-    }, [starBharat.bharatData])
-  
-    let video = document.querySelector('video');
-    useEffect(() => {
-      listAll(storageRef)
-        .then((res) => {
-          const urls = [];
-          res.items.forEach((itemRef) => {
-            getDownloadURL(itemRef)
-              .then((url) => {
-                urls.push(url);
-                setVideoUrls(urls);
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-          });
-  
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }, [])
-  
-    const CardSliderR=()=>{
-      if(cardContainer > -60){
-         setCardContainer(cardContainer + (-20))
-      }
+  const starBharat = useFirebase();
+  const [videoUrls, setVideoUrls] = useState([]);
+  const [hover, setHover] = useState(false);
+  const [speaker, setSpeaker] = useState(false);
+  const [value, setValue] = useState()
+  const [isEnter, setIsEntered] = useState(false)
+  const { storageRef } = starBharat;
+  const [user, setUser] = useState();
+  const [cardContainer, setCardContainer] = useState(0)
+  const arr = [];
+  useEffect(() => {
+    if (starBharat.bharatData) {
+      starBharat.bharatData.forEach((data) => {
+        arr.push(data.data())
+      });
+      setUser(arr)
     }
-    const CardSliderL=()=>{
-      if(cardContainer < 0){
-         setCardContainer(cardContainer + (20))
-      }
+  }, [starBharat.bharatData])
+
+  let video = document.querySelector('video');
+  useEffect(() => {
+    listAll(storageRef)
+      .then((res) => {
+        const urls = [];
+        res.items.forEach((itemRef) => {
+          getDownloadURL(itemRef)
+            .then((url) => {
+              urls.push(url);
+              setVideoUrls(urls);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        });
+
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [])
+
+  const CardSliderR = () => {
+    if (cardContainer > -60) {
+      setCardContainer(cardContainer + (-20))
     }
-  
+  }
+  const CardSliderL = () => {
+    if (cardContainer < 0) {
+      setCardContainer(cardContainer + (20))
+    }
+  }
+
   return (
     <>
-             {
-          isEnter &&
-          <>
-            <img src="assets/arrowleft.svg" alt="" className='hslidel' onClick={CardSliderL} onMouseEnter={
-              () => setIsEntered(true)
-            }
-              onMouseLeave={
-                () => setIsEntered(false)
-              } />
-
-            <img src="assets/arrowleft.svg" alt="" className='hslider' onClick={CardSliderR} onMouseEnter={
-              () => setIsEntered(true)
-            }
-              onMouseLeave={
-                () => setIsEntered(false)
-              } />
-          </>
-        }
-
-        <Cards style={{ transform: `translateX(${cardContainer}%)` }}  
-          onMouseEnter={
+      {
+        isEnter &&
+        <>
+          <img src="assets/arrowleft.svg" alt="" className='hslidel' onClick={CardSliderL} onMouseEnter={
             () => setIsEntered(true)
           }
-          onMouseLeave={
-            () => setIsEntered(false)
-          }>
+            onMouseLeave={
+              () => setIsEntered(false)
+            } />
 
-          {user ?
-
-            user.map((val, ind) => {
-              return (
-                <Card onMouseEnter={() => {
-                  setValue(ind)
-                  setHover(true)
-                  console.log('res')
-                }}
-
-                  onMouseLeave={() => { setHover(false) }} key={ind} className='cards' >
-
-                  {
-                    hover &&
-                    (value === ind &&
-                      <video src={videoUrls[ind]} autoPlay loop muted />
-                    )
-                  }
-
-                  <img src={val.img} alt="" />
-                  <Sound>{
-                    hover &&
-                    value === ind &&
-                    (speaker && <img src="assets/speakeron.svg" alt="" onClick={() => {
-                      setSpeaker(false)
-                      console.log('on')
-                      video.muted = true;
-                      video.volume = 0.5
-                    }} />
-                    )}
-                    {
-                      hover &&
-                      value === ind &&
-                      (!speaker && <img src="assets/speakeroff.svg" alt="" onClick={() => {
-                        setSpeaker(true)
-                        video.muted = false
-                        console.log('off')
-                      }} />
-                      )}
-                  </Sound>
-                  <Details>
-                    <button><img src="assets/play.svg" alt="" /><span>Watch Now</span></button>
-                    <div>
-                      <span>{val.subtitle}</span>
-                      <p>{val.desc}</p>
-                    </div>
-                    <Divide></Divide>
-                  </Details>
-                </Card>
-
-              )
-            })
-            :
-
-         ( 
-            <div className='loading'>
-          <img src="https://cdn.dribbble.com/users/347174/screenshots/2958807/media/57718cf1f96050b37782d96f41dc46d3.gif" alt="" />
-          </div>
-          )
+          <img src="assets/arrowleft.svg" alt="" className='hslider' onClick={CardSliderR} onMouseEnter={
+            () => setIsEntered(true)
           }
+            onMouseLeave={
+              () => setIsEntered(false)
+            } />
+        </>
+      }
 
-        </Cards>
+      <Cards style={{ transform: `translateX(${cardContainer}%)` }}
+        onMouseEnter={
+          () => setIsEntered(true)
+        }
+        onMouseLeave={
+          () => setIsEntered(false)
+        }>
+
+        {user ?
+
+          user.map((val, ind) => {
+            return (
+              <Card onMouseEnter={() => {
+                setValue(ind)
+                setHover(true)
+                
+              }}
+
+                onMouseLeave={() => { setHover(false) }} key={ind} className='cards' >
+
+                <img src={val.img} alt="" />
+                <Details>
+                  <button><img src="assets/play.svg" alt="" /><span>Watch Now</span></button>
+                  <div>
+                    <span>{val.subtitle}</span>
+                    <p>{val.desc}</p>
+                  </div>
+                  <Divide></Divide>
+                </Details>
+              </Card>
+
+            )
+          })
+          :
+
+          (
+            <div className='loading'>
+              <img src="https://cdn.dribbble.com/users/347174/screenshots/2958807/media/57718cf1f96050b37782d96f41dc46d3.gif" alt="" />
+            </div>
+          )
+        }
+
+      </Cards>
     </>
   )
 }
 
 export default StarBharatComp;
-
-const Sound = styled.div`
-position: absolute;
-right: .5em;
-bottom: 60%;
-z-index: 100;
-cursor: pointer;
-img{
-  width:15px!important;
-  height: 15px!important;
-  filter: invert(1);
-}
-`;
 const Divide = styled.div`
 background-image:linear-gradient(to top, rgba(4,8,15,0), #16181f, #16181f);
 width:92.8%;
